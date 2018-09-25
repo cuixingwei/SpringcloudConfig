@@ -21,5 +21,5 @@ spring:
       content-type: text/html
     encoding: UTF-8
 demo:
-  name: test131
+  name: test13
   file: wode

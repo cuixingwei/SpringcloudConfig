@@ -14,14 +14,6 @@ spring:
         - Path=/auth/**
   application:
     name: msp-gateway
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8081/eureka
-    registry-fetch-interval-seconds: 10
-  instance:
-    prefer-ip-address: true
-
 auth-server: http://localhost:8083
 security:
   oauth2:
