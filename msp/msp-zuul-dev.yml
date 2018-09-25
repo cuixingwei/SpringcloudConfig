@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: 8084
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -18,7 +18,12 @@ spring:
       name: msp
       password: msp
   application:
-    name: msp-auth
+    name: msp-zuul
+zuul:
+  routes:
+    api-a:
+      path: /api-a/**
+      serviceId: msp-auth
 eureka:
   client:
     service-url:
@@ -26,3 +31,14 @@ eureka:
     registry-fetch-interval-seconds: 10
   instance:
     prefer-ip-address: true
+auth-server: http://localhost:8083
+security:
+  oauth2:
+    client:
+      client-id: msp-zuul
+      client-secret: msp-zuul
+      user-authorization-uri: ${auth-server}/oauth/authorize
+      access-token-uri: ${auth-server}/oauth/token
+    resource:
+      jwt:
+        key-uri: ${auth-server}/oauth/token_key

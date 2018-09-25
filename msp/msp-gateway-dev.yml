@@ -1,0 +1,35 @@
+server:
+  port: 8085
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+      - id: msp-auth
+        uri: lb://msp-auth
+        predicates:
+        - Path=/auth/**
+  application:
+    name: msp-gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka
+    registry-fetch-interval-seconds: 10
+  instance:
+    prefer-ip-address: true
+
+auth-server: http://localhost:8083
+security:
+  oauth2:
+    client:
+      client-id: msp-gateway
+      client-secret: msp-gateway
+      user-authorization-uri: ${auth-server}/oauth/authorize
+      access-token-uri: ${auth-server}/oauth/token
+    resource:
+      jwt:
+        key-uri: ${auth-server}/oauth/token_key
